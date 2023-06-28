@@ -10,6 +10,7 @@ CREATE TABLE users.roles (
 	role_modified_date timestamp	
 );
 
+
 CREATE TABLE users.users (
     user_entity_id int primary key, --pk,fk
     user_name varchar(15) unique,
@@ -22,13 +23,9 @@ CREATE TABLE users.users (
 	user_modified_date timestamp,
 	user_photo varchar(255),
 	user_current_role int, --fk
-	constraint FK_user_entity_id foreign key (user_entity_id) references users.business_entity (entity_id)
-	
+	constraint FK_user_entity_id foreign key (user_entity_id) references users.business_entity (entity_id),
+	 constraint fk_user_current_role foreign key (user_current_role) references users.roles(role_id)
 );
-
-ALTER TABLE users.users
-ADD CONSTRAINT fk_user_current_role foreign key (user_current_role) references users.users_roles(usro_role_id);
-
 
 
 CREATE TABLE users.users_roles (
@@ -39,16 +36,6 @@ CREATE TABLE users.users_roles (
 	constraint FK_usro_entity_id foreign key (usro_entity_id) references users.users (user_entity_id),
 	constraint FK_usro_role_id foreign key (usro_role_id) references users.roles (role_id)
 );
-
--- ERROR:  there is no unique constraint matching given keys for referenced table "users_roles" --
--- jadi table users_roles harus di bikin unique dulu
-ALTER TABLE users.users_roles
-ADD CONSTRAINT unique_usro_role_id UNIQUE (usro_role_id);
--- baru setelah itu bisa alter refrence dari table users ke tabel users_role
-ALTER TABLE users.users
-ADD CONSTRAINT fk_user_current_role FOREIGN KEY (user_current_role) REFERENCES users.users_roles(usro_role_id);
-
-
 
 
 CREATE TABLE users.users_skill (
@@ -79,6 +66,13 @@ CREATE TABLE users.users_experiences (
 	constraint FK_usex_entity_id foreign key (usex_entity_id) references users.users (user_entity_id)
 );
 
+--tambahkan constraint unique agar bisa dipakai sebagai referensi foreign key--
+ALTER TABLE users.users_experiences
+ADD CONSTRAINT unique_usex_id UNIQUE (usex_id);
+
+--tambahkan constraint unique agar bisa dipakai sebagai referensi foreign key--
+ALTER TABLE users.users_skill
+ADD CONSTRAINT unique_uski_id UNIQUE (uski_id);
 
 CREATE TABLE users.users_experiences_skill (
     uesk_usex_id int, --pk,fk
@@ -87,16 +81,6 @@ CREATE TABLE users.users_experiences_skill (
     constraint FK_uesk_usex_id foreign key (uesk_usex_id) references users.users_experiences (usex_id),
 	constraint FK_uesk_uski_id foreign key (uesk_uski_id) references users.users_skill (uski_id)
 );
--- ERROR:  there is no unique constraint matching given keys for referenced table "users_experiences" --
--- ERROR:  there is no unique constraint matching given keys for referenced table "users_skill" ---
--- jadi table users_experiences dan users_skill harus dibikin unique dulu
-ALTER TABLE users.users_experiences
-ADD CONSTRAINT unique_usex_id UNIQUE (usex_id);
-
-ALTER TABLE users.users_skill
-ADD CONSTRAINT unique_uski_id UNIQUE (uski_id);
-
-
 
 
 CREATE TABLE users.users_license (
@@ -175,4 +159,5 @@ CREATE TABLE users.users_address(
 	etad_adty_id int, --fk reference ke table address_type pada module master
 	constraint FK_etad_entity_id foreign key (etad_entity_id) references users.users (user_entity_id)
 );
+
 
