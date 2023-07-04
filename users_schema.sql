@@ -153,7 +153,7 @@ CREATE TABLE users.users_phones(
 
 
 CREATE TABLE users.users_address(
-	etad_addr_id int, --pk,fk reference ke table address pada module master
+	etad_addr_id int primary key, --pk,fk reference ke table address pada module master
 	etad_modified_date timestamp,
 	etad_entity_id int, --fk
 	etad_adty_id int, --fk reference ke table address_type pada module master
