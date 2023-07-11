@@ -40,11 +40,11 @@ CREATE TABLE users.users_roles (
 
 CREATE TABLE users.users_skill (
     uski_id serial, --fk
-	uski_identity_id int, --fk,pk
+	uski_entity_id int, --fk,pk
 	uski_modified_date timestamp,
 	uski_skty_name varchar(15) unique, -- uski_skty_name reference to skty_name module master
-	constraint PK_uski_id_and_uski_identity_id primary key(uski_id, uski_identity_id),
-	constraint FK_uski_identity_id foreign key (uski_identity_id) references users.users (user_entity_id)
+	constraint PK_uski_id_and_uski_entity_id primary key(uski_id, uski_entity_id),
+	constraint FK_uski_entity_id foreign key (uski_entity_id) references users.users (user_entity_id)
 );
 
 
