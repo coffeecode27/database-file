@@ -53,7 +53,7 @@ CREATE TABLE users.users_experiences (
 	usex_entity_id int, --pk,fk
 	usex_title varchar(255),
 	usex_profile_headline varchar(512),
-	usex_eployment_type varchar(15) CHECK (usex_eployment_type IN ('fulltime', 'freelance')),
+	usex_employment_type varchar(15) CHECK (usex_eployment_type IN ('fulltime', 'freelance')),
 	usex_company_name varchar(255),
 	usex_is_current char(1) CHECK (usex_is_current IN ('0', '1')),
 	usex_start_date timestamp,
@@ -159,5 +159,105 @@ CREATE TABLE users.users_address(
 	etad_adty_id int, --fk reference ke table address_type pada module master
 	constraint FK_etad_entity_id foreign key (etad_entity_id) references users.users (user_entity_id)
 );
+
+------------ QUERY INPUT DATA -------------------
+
+insert into users.business_entity values
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(7),
+(8),
+(9);
+
+insert into users.roles values
+(1,	'Candidat',	'external'),
+(2,	'Talent',	'external'),
+(3,	'Recruiter', 'Internal'),
+(4,	'Instructor',	'Internal'),
+(5,	'Sales',	'Internal'),
+(6,	'Manager',	'Internal'),
+(7,	'Vice President',	'Internal'),
+(8,	'Account Manager',	'Internal'),
+(9,	'Student',	'external'),
+(10,'Administrator',	'Internal'),
+(11,'outsource',	'Internal'),
+(12,'Employee',	'Internal');
+
+
+INSERT INTO users.users (user_entity_id, user_name, user_first_name, user_last_name, user_email_promotion,
+                         user_modified_date, user_demographic, user_photo, user_current_role, user_password) VALUES
+(1, 'kangdian', 'kang', 'dian', 1, '2022-07-12', '{"latitude": 12.90, "longitude": -99.989}', 'photo.png', 4, 'yadfaldjfapdjf;ajfpasdf'),
+(2, 'nofal', 'nofal', 'firdaus', 0, '2022-07-12', '{"latitude": 12.90, "longitude": -99.989}', 'nofal.png', 4, 'ajdfja;dfpadjfadf'),
+(3, 'abdul101', 'Abdul', 'Razaq', 1, '2022-07-12', '{"latitude": 12.90, "longitude": -99.989}', 'abdul.png', 1, 'alsdjfapdfaodfadf'),
+(4, 'ratih', 'ratih', 'wina ludwig', 0, '2022-07-12', '{"latitude": 12.90, "longitude": -99.989}', 'ratih.png', 11, 'yadlfjadjfa'),
+(5, 'Eka', 'Eka', 'Nugroho', 0, '2022-07-12', '{"latitude": 12.90, "longitude": -99.989}', 'eka.png', 8, 'ynyaldjf;adfadfad;faldfsa'),
+(6, 'novia', 'novia', 'slebew', 1, '2022-07-12', '{"latitude": 12.90, "longitude": -99.989}', 'novia.png', 9, 'lajdfljaljdfajdf;a'),
+(7, 'novelina', 'novelina', 'lina', 0, '2022-07-12', '{"latitude": 12.90, "longitude": -99.989}', 'lina.png', 3, 'lkadjfajdf;adf'),
+(8, 'yugo', 'yugo', 'ardan', 1, '2022-07-12', '{"latitude": 12.90, "longitude": -99.989}', 'yogo.png', 1, 'aldjfadfa;dfjlajdf;a'),
+(9, 'andhika', 'andhika', 'pratama', 1, '2022-07-12', '{"latitude": 12.90, "longitude": -99.989}', 'andhika.png', 2, 'ladfljafjadfas;f');
+
+
+INSERT INTO users.users_roles VALUES
+(1, 1, '2022-12-07'),
+(2, 1, '2022-12-07'),
+(3, 3, '2022-12-07'),
+(4, 5, '2022-12-07');
+
+
+INSERT INTO users.users_skill(uski_id, uski_entity_id, uski_skty_name) VALUES
+(1, 1, 'java'),
+(2, 1 ,'dotnet'),
+(3, 2 ,'javascript');
+
+INSERT INTO users.users_experiences(usex_id, usex_entity_id, usex_title, usex_profile_headline, 
+						usex_employment_type, usex_company_name, usex_city_id, usex_is_current,
+						usex_start_date, usex_end_date, usex_industry, usex_description,
+						usex_experience_type) VALUES
+(1, 1, 'Head Of Bootcamp', '', 'fulltime', 'Code.id', 1, '1', '2019-07-12', '2020-07-12',
+ 'Consultant','I believe..', 'company'),
+(2, 1, 'Motivator', 'Act as volunter', 'freelance', 'Government', 1, '0', '2019-07-12', '2020-07-12',
+ 'Government','helping people to learn', 'voluntering');
+ 
+
+INSERT INTO users.users_experiences_skill VALUES
+(1, 1),
+(1, 2),
+(1, 3);
+
+INSERT INTO users.users_email(pmail_id, pmail_entity_id, pmail_address) VALUES
+(1, 1, 'dian@code.id'),
+(2, 1, 'dian@gmail.com'),
+(3, 2, 'nofal@code.id');
+
+INSERT INTO users.users_media(usme_id, usme_entity_id, usme_file_link, usme_filename,
+							 usme_filesize, usme_filetype, usme_note) VALUES
+(1, 1, 'https://', 'ijazah.png', 2345, 'jpg', 'ijazah'),
+(2, 1, 'https://', 'cv.docx', 1890, 'word', 'cv');
+
+
+INSERT INTO users.users_education(usdu_id, usdu_entity_id, usdu_school, usdu_degree, 
+								 usdu_field_study, usdu_start_date, usdu_end_date,
+								 usdu_grade, usdu_activities, usdu_description) Values
+(1, 1, 'MIT', 'Bachelor', 'Informatic', '2000-07-12', '2005-08-12', '3.45', 'I''m bachelor with cumlaude', '');
+
+INSERT INTO users.phone_number_type VALUES
+('Home', '2022-07-12'),
+('Cell', '2022-07-12');
+
+INSERT INTO users.users_phones(uspo_entity_id, uspo_number, uspo_ponty_code) VALUES
+(1, '8139809091', 'Cell'),
+(1, '022-7890987', 'Home'),
+(2, '089898989', 'Cell');
+
+
+INSERT INTO users.users_address(etad_addr_id, etad_entity_id, etad_adty_id) VALUES
+(1, 1, 1),
+(2, 2, 2);
+
+
 
 
